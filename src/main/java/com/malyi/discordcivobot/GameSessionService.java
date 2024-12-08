@@ -52,7 +52,7 @@ public class GameSessionService {
         Random random = new Random();
 
         for (int i = 1; i <= session.getPlayers(); i++) {
-            result.append("Игрок ").append(i).append(": ");
+            result.append("**Игрок ").append(i).append(": **");
             for (int j = 0; j < session.getPicks(); j++) {
                 if (availableCivs.isEmpty()) {
                     result.append("\nНе хватает цивилизаций для уникальных пиков!");
