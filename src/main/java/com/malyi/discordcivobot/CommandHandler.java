@@ -14,10 +14,19 @@ public class CommandHandler {
         this.gameSessionService = gameSessionService;
     }
 
+//    Should be refactored in future and every command
+//    will be a new method which will be called by controller  @kyrylomalyi81 08.12.2024
+
+
+
     public void registerCommands(DiscordClient client) {
         client.withGateway(gateway -> gateway.on(MessageCreateEvent.class, event -> {
             String content = event.getMessage().getContent();
             String userId = event.getMessage().getAuthor().map(user -> user.getId().asString()).orElse("");
+
+            if (content.startsWith("!Тодоров")) {
+                return event.getMessage().getChannel().flatMap(channel -> channel.createMessage("Алексей самый гениальный игрок живущий в нашем мире"));
+            }
 
             if (content.startsWith("!startgame")) {
                 gameSessionService.startSession(userId);
