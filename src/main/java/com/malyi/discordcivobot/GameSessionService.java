@@ -10,11 +10,11 @@ import java.util.*;
 public class GameSessionService {
 
     private final List<String> civilizations = Arrays.asList(
-            "America", "Arabia" , "Australia" , "Aztec" , "Brazil" ,
-            "China" , "Egypt" , "England" , "France" , "Germany" ,
-            "Greece" , "India" , "Japan" , "Kongo" , "Macedon" ,
-            "Norway" , "Norway" , "Poland" , "Persia" , "Rome" ,
-            "Scythia" , "Spain" , "Sumeria"
+            "America", "Arabia", "Australia", "Aztec", "Brazil",
+            "China", "Egypt", "England", "France", "Germany",
+            "Greece", "India", "Japan", "Kongo", "Macedon",
+            "Norway", "Poland", "Persia", "Rome",
+            "Scythia", "Spain", "Sumeria"
     );
 
     private final Map<String, GameSession> sessions = new HashMap<>();
@@ -27,10 +27,10 @@ public class GameSessionService {
         return sessions.containsKey(userId);
     }
 
-    public void setPlayers(String userId, int players) {
+    public void setPlayerMentions(String userId, List<String> playerMentions) {
         GameSession session = sessions.get(userId);
         if (session != null) {
-            session.setPlayers(players);
+            session.setPlayers(playerMentions);
         }
     }
 
@@ -51,8 +51,8 @@ public class GameSessionService {
         List<String> availableCivs = new ArrayList<>(civilizations);
         Random random = new Random();
 
-        for (int i = 1; i <= session.getPlayers(); i++) {
-            result.append("**Игрок ").append(i).append(": **");
+        for (String player : session.getPlayers()) {
+            result.append("**").append(player).append(": **");
             for (int j = 0; j < session.getPicks(); j++) {
                 if (availableCivs.isEmpty()) {
                     result.append("\nНе хватает цивилизаций для уникальных пиков!");
@@ -71,9 +71,7 @@ public class GameSessionService {
     @Setter
     @Getter
     static class GameSession {
-        private int players;
+        private List<String> players = new ArrayList<>();
         private int picks;
-
     }
 }
-
