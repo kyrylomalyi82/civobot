@@ -10,11 +10,28 @@ import java.util.*;
 public class GameSessionService {
 
     private final List<String> civilizations = Arrays.asList(
-            "America", "Arabia", "Australia", "Aztec", "Brazil",
-            "China", "Egypt", "England", "France", "Germany",
-            "Greece", "India", "Japan", "Kongo", "Macedon",
-            "Norway", "Poland", "Persia", "Rome",
-            "Scythia", "Spain", "Sumeria"
+            "America (Theodore Roosevelt)", "America (Abraham Lincoln)",
+            "Arabia (Saladin)",
+            "Australia (John Curtin)",
+            "Aztec (Montezuma)",
+            "Brazil (Pedro II)",
+            "China (Qin Shi Huang)", "China (Wu Zetian)",
+            "Egypt (Cleopatra)",
+            "England (Victoria)", "England (Elizabeth I)",
+            "France (Catherine de Medici)", "France (Leonardo da Vinci)",
+            "Germany (Frederick Barbarossa)",
+            "Greece (Pericles)", "Greece (Gorgo)",
+            "India (Gandhi)", "India (Chandragupta)",
+            "Japan (Hojo Tokimune)",
+            "Kongo (Mvemba a Nzinga)",
+            "Macedon (Alexander the Great)",
+            "Norway (Harald Hardrada)",
+            "Poland (Jadwiga)",
+            "Persia (Cyrus)",
+            "Rome (Trajan)",
+            "Scythia (Tomyris)",
+            "Spain (Philip II)",
+            "Sumeria (Gilgamesh)"
     );
 
     private final Map<String, GameSession> sessions = new HashMap<>();
