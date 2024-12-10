@@ -25,30 +25,22 @@ public class CommandHandler {
             String content = event.getMessage().getContent();
             String userId = event.getMessage().getAuthor().map(user -> user.getId().asString()).orElse("");
 
+            // Check if the message starts with the command prefix
             if (content.startsWith(COMMAND_PREFIX)) {
-                // Handle different commands
-                if (content.startsWith("!Тестирование")) {
-                    return handleTestCommand(event);
-                }
+                String command = content.split(" ")[0].toLowerCase(); // Extract the command part and convert to lowercase
 
-                if (content.startsWith("!Тодоров")) {
-                    return handleTodorovCommand(event);
-                }
-
-                if (content.startsWith("!startgame")) {
-                    return handleStartGameCommand(event, userId);
-                }
-
-                if (content.startsWith("!players")) {
-                    return handlePlayersCommand(event, userId);
-                }
-
-                if (content.startsWith("!picks")) {
-                    return handlePicksCommand(event, userId, content);
-                }
+                // Switch case to handle different commands
+                return switch (command) {
+                    case "!тестирование" -> handleTestCommand(event);
+                    case "!тодоров" -> handleTodorovCommand(event);
+                    case "!startgame" -> handleStartGameCommand(event, userId);
+                    case "!players" -> handlePlayersCommand(event, userId);
+                    case "!picks" -> handlePicksCommand(event, userId, content);
+                    default -> sendMessage(event, "Такой команды нету");
+                };
             }
 
-            return Mono.empty();
+            return Mono.empty(); // Return empty if the message doesn't start with a recognized command
         })).block();
     }
 
