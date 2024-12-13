@@ -1,5 +1,7 @@
 package com.malyi.discordcivobot;
 
+import discord4j.core.spec.EmbedCreateSpec;
+import discord4j.rest.util.Color;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
@@ -100,36 +102,44 @@ public class GameSessionService {
 
 
     // suggestion for refactoring create a method to print results
-    public String generatePicks(String userId) {
+    public EmbedCreateSpec generatePicks(String userId) {
         GameSession session = sessions.get(userId);
         if (session == null) {
-            return "Сессия не найдена!";
+            return EmbedCreateSpec.builder()
+                    .title("Error")
+                    .description("Сессия не найдена!")
+                    .color(Color.RED)
+                    .build();
         }
 
-        StringBuilder result = new StringBuilder("**Результаты:**\n" + "\n");
+        StringBuilder civPicks = new StringBuilder();
         List<String> availableCivs = new ArrayList<>(civilizations);
         List<String> availableWorldGeneration = new ArrayList<>(worldGeneration);
         Random random = new Random();
 
         for (String player : session.getPlayers()) {
-            result.append("**").append(player).append(": **");
+            civPicks.append("**").append(player).append(":** ");
             for (int j = 0; j < session.getPicks(); j++) {
                 String civ = availableCivs.remove(random.nextInt(availableCivs.size()));
-                result.append(civ).append(j < session.getPicks() - 1 ? ", " : "");
+                civPicks.append(civ).append(j < session.getPicks() - 1 ? ", " : "");
             }
-            result.append("\n");
+            civPicks.append("\n");
         }
 
-        result.append("\n");
-        result.append("**World Generation:**");
-        for (int j = 0; j < 3 ; j++  ){
+        StringBuilder worldGen = new StringBuilder();
+        for (int j = 0; j < 3; j++) {
             String world = availableWorldGeneration.remove(random.nextInt(availableWorldGeneration.size()));
-            result.append(world).append(j < 2 ? ", " : "");
+            worldGen.append(world).append(j < 2 ? ", " : "");
         }
-
 
         sessions.remove(userId);
-        return result.toString();
+
+        return EmbedCreateSpec.builder()
+                .title("Результаты")
+                .addField("Civilization Picks", civPicks.toString(), false)
+                .addField("World Generation", worldGen.toString(), false)
+                .color(Color.GREEN)
+                .build();
     }
 
     @Setter

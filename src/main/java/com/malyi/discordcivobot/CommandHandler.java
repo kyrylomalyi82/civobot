@@ -3,6 +3,7 @@ package com.malyi.discordcivobot;
 import discord4j.core.DiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.User;
+import discord4j.core.spec.EmbedCreateSpec;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -80,11 +81,17 @@ public class CommandHandler {
                 return sendMessage(event, "Кол-во пиков должно быть между 1 и 5. Введите `!picks <число>`");
             }
             gameSessionService.setPicks(userId, picks);
-            String result = gameSessionService.generatePicks(userId);
+            EmbedCreateSpec result = (gameSessionService.generatePicks(userId));
             return sendMessage(event, result);
         } catch (NumberFormatException e) {
             return sendMessage(event, "Введите корректное число пиков. `!picks <число>`");
         }
+    }
+
+    private Mono<Void> sendMessage(MessageCreateEvent event, EmbedCreateSpec message) {
+        return event.getMessage().getChannel()
+                .flatMap(channel -> channel.createMessage(message))
+                .then();
     }
 
     // Utility method to send messages
