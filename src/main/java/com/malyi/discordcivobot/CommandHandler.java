@@ -1,5 +1,6 @@
 package com.malyi.discordcivobot;
 
+import com.malyi.discordcivobot.service.GameSessionService;
 import discord4j.core.DiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.User;
