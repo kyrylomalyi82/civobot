@@ -5,10 +5,13 @@ import discord4j.core.DiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.User;
 import discord4j.core.spec.EmbedCreateSpec;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Component
@@ -16,9 +19,11 @@ public class CommandHandler {
 
     private static final String COMMAND_PREFIX = "!";
     private final GameSessionService gameSessionService;
+    private final MessageSource messageSource;
 
-    public CommandHandler(GameSessionService gameSessionService) {
+    public CommandHandler(GameSessionService gameSessionService, MessageSource messageSource) {
         this.gameSessionService = gameSessionService;
+        this.messageSource = messageSource;
     }
 
     // Register the commands and their handlers
@@ -36,7 +41,8 @@ public class CommandHandler {
                     case "!startgame" -> handleStartGameCommand(event, userId);
                     case "!players" -> handlePlayersCommand(event, userId);
                     case "!picks" -> handlePicksCommand(event, userId, content);
-                    default -> sendMessage(event, "Такой команды нету");
+                    case "!setlang" -> handleSetLangCommand(event, userId, content);
+                    default -> sendMessage(event, "no_command");
                 };
             }
 
@@ -48,7 +54,7 @@ public class CommandHandler {
 
     private Mono<Void> handleStartGameCommand(MessageCreateEvent event, String userId) {
         gameSessionService.startSession(userId);
-        return sendMessage(event, "Игра началась! Укажите участников командой: `!players @user1 @user2 ...`");
+        return sendMessage(event, "game_started");
     }
 
     private Mono<Void> handlePlayersCommand(MessageCreateEvent event, String userId) {
@@ -58,35 +64,86 @@ public class CommandHandler {
                 .collect(Collectors.toList());
 
         if (players.isEmpty()) {
-            return sendMessage(event, "Необходимо указать хотя бы одного игрока с помощью упоминания.");
+            return sendMessage(event, "specify_players");
         }
 
         gameSessionService.setPlayerMentions(userId, players);
-        return sendMessage(event, "Каждому игроку будет назначена цивилизация. Введите `!picks <число>` чтобы указать количество пиков.");
+        return sendMessage(event, "set_picks_number");
     }
 
     private Mono<Void> handlePicksCommand(MessageCreateEvent event, String userId, String content) {
         try {
             int picks = Integer.parseInt(content.split(" ")[1]);
             if (picks < 1 || picks > 5) {
-                return sendMessage(event, "Кол-во пиков должно быть между 1 и 5. Введите `!picks <число>`");
+                return sendMessage(event, "set_picks_number");
             }
             gameSessionService.setPicks(userId, picks);
-            EmbedCreateSpec result = (gameSessionService.generatePicks(userId));
+            EmbedCreateSpec result = gameSessionService.generatePicks(userId);
             return sendMessage(event, result);
         } catch (NumberFormatException e) {
-            return sendMessage(event, "Введите корректное число пиков. `!picks <число>`");
+            return sendMessage(event, "invalid_picks");
         }
     }
 
-    private Mono<Void> sendMessage(MessageCreateEvent event, EmbedCreateSpec message) {
+    private Mono<Void> handleSetLangCommand(MessageCreateEvent event, String userId, String content) {
+        String[] parts = content.split(" ");
+
+        // Check if the user has provided a language code
+        if (parts.length < 2) {
+            // List available languages if no language code is provided
+            String availableLanguages = "Available languages: en, de, es, ru, ua, cn";  // Modify as per your supported languages
+            return sendMessage(event, availableLanguages);
+        }
+
+        String languageCode = parts[1].toLowerCase();  // Convert language code to lowercase for consistency
+
+        // Define the allowed language codes
+        List<String> allowedLanguages = List.of("cn", "ua", "ru", "es", "de", "en");
+
+        // Check if the provided language code is valid
+        if (!allowedLanguages.contains(languageCode)) {
+            return sendMessage(event, "invalid_language");  // Invalid language, notify the user
+        }
+
+        Locale locale;
+
+        // Handle the CN case (China, Simplified Chinese)
+        switch (languageCode) {
+            case "cn":
+                locale = Locale.SIMPLIFIED_CHINESE;  // or you can use new Locale("zh", "CN") depending on your preference
+                break;
+            case "ua":
+                locale = new Locale("uk", "UA");  // Ukrainian
+                break;
+            case "ru":
+                locale = new Locale("ru", "RU");  // Russian
+                break;
+            case "es":
+                locale = new Locale("es", "ES");  // Spanish
+                break;
+            case "de":
+                locale = new Locale("de", "DE");  // German
+                break;
+            case "en":
+            default:
+                locale = new Locale("en", "US");  // English
+                break;
+        }
+
+        LocaleContextHolder.setLocale(locale);
+        return sendMessage(event, "language_changed");
+    }
+
+
+    // Utility method to send messages in a localized way
+    private Mono<Void> sendMessage(MessageCreateEvent event, String messageKey) {
+        String localizedMessage = messageSource.getMessage(messageKey, null, LocaleContextHolder.getLocale());
         return event.getMessage().getChannel()
-                .flatMap(channel -> channel.createMessage(message))
+                .flatMap(channel -> channel.createMessage(localizedMessage))
                 .then();
     }
 
-    // Utility method to send messages
-    private Mono<Void> sendMessage(MessageCreateEvent event, String message) {
+    private Mono<Void> sendMessage(MessageCreateEvent event, EmbedCreateSpec message) {
         return event.getMessage().getChannel()
                 .flatMap(channel -> channel.createMessage(message))
                 .then();
