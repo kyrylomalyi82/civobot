@@ -33,8 +33,6 @@ public class CommandHandler {
 
                 // Switch case to handle different commands
                 return switch (command) {
-                    case "!тестирование" -> handleTestCommand(event);
-                    case "!тодоров" -> handleTodorovCommand(event);
                     case "!startgame" -> handleStartGameCommand(event, userId);
                     case "!players" -> handlePlayersCommand(event, userId);
                     case "!picks" -> handlePicksCommand(event, userId, content);
@@ -47,14 +45,6 @@ public class CommandHandler {
     }
 
     // Command handling methods
-
-    private Mono<Void> handleTestCommand(MessageCreateEvent event) {
-        return sendMessage(event, "Алик гениален ебал Настю Н");
-    }
-
-    private Mono<Void> handleTodorovCommand(MessageCreateEvent event) {
-        return sendMessage(event, "Алексей самый гениальный игрок живущий в нашем мире");
-    }
 
     private Mono<Void> handleStartGameCommand(MessageCreateEvent event, String userId) {
         gameSessionService.startSession(userId);
