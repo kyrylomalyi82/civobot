@@ -53,7 +53,7 @@ Ensure you have the following before starting the bot:
 
 3. Create a file named application.properties in the src/main/resources directory with the following content:
    ```bash
-   token=YOUR_DISCORD_BOT_TOKEN
+     token=YOUR_DISCORD_BOT_TOKEN
    ```
 
 4.Build the project using Maven:
@@ -61,10 +61,10 @@ Ensure you have the following before starting the bot:
     mvn clean install
   ```
 
-5.Run the bot:
-```bash
-mvn spring-boot:run
- ```
+ 5.Run the bot:
+ ```bash
+    mvn spring-boot:run
+   ```
 
 Command Reference
 !startgame: Starts a new game session.
