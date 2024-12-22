@@ -29,44 +29,9 @@
 - **Lombok**: Used to reduce boilerplate code for getters, setters, and other repetitive tasks.
 - **Maven**: Dependency management and project build system.
 
-## Getting Started
 
-### Prerequisites
+## Command Reference
 
-Ensure you have the following before starting the bot:
-- A **Discord bot token**. Create one via the [Discord Developer Portal](https://discord.com/developers/applications).
-- Java 17 or newer installed on your machine.
-- Maven installed to manage dependencies.
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/CIVOBOT.git
-   cd CIVOBOT
-   ```
-
-2. Navigate to the project directory:
-   ```bash
-   cd CIVOBOT
-   ```
-
-3. Create a file named application.properties in the src/main/resources directory with the following content:
-   ```bash
-     token=YOUR_DISCORD_BOT_TOKEN
-   ```
-
-4.Build the project using Maven:
-  ```bash
-    mvn clean install
-  ```
-
- 5.Run the bot:
- ```bash
-    mvn spring-boot:run
-   ```
-
-Command Reference
 !startgame: Starts a new game session.
 !players @player1 @player2 ...: Add players to the game.
 !picks <number>: Set the number of civilization picks (1 to 5).
@@ -75,11 +40,14 @@ Command Reference
 
 Example Usage
 Start a game:
+
 !startgame
 Add players to the game:
+
 !players @Player1 @Player2 @Player3
 Set the number of civilization picks:
 !picks 3
+
 Set the bot language to Spanish:
 !setlang es
 Future Features
