@@ -90,47 +90,19 @@ public class CommandHandler {
 
         // Check if the user has provided a language code
         if (parts.length < 2) {
-            // List available languages if no language code is provided
-            String availableLanguages = "Available languages: en, de, es, ru, ua, cn";  // Modify as per your supported languages
-            return sendMessage(event, availableLanguages);
+            return sendMessage(event, "availableLanguages");
         }
 
-        String languageCode = parts[1].toLowerCase();  // Convert language code to lowercase for consistency
-
-        // Define the allowed language codes
-        List<String> allowedLanguages = List.of("cn", "ua", "ru", "es", "de", "en");
-
-        // Check if the provided language code is valid
-        if (!allowedLanguages.contains(languageCode)) {
-            return sendMessage(event, "invalid_language");  // Invalid language, notify the user
-        }
-
+        String languageCode = parts[1];
         Locale locale;
 
-        // Handle the CN case (China, Simplified Chinese)
-        switch (languageCode) {
-            case "cn":
-                locale = Locale.SIMPLIFIED_CHINESE;  // or you can use new Locale("zh", "CN") depending on your preference
-                break;
-            case "ua":
-                locale = new Locale("uk", "UA");  // Ukrainian
-                break;
-            case "ru":
-                locale = new Locale("ru", "RU");  // Russian
-                break;
-            case "es":
-                locale = new Locale("es", "ES");  // Spanish
-                break;
-            case "de":
-                locale = new Locale("de", "DE");  // German
-                break;
-            case "en":
-            default:
-                locale = new Locale("en", "US");  // English
-                break;
+        try {
+            locale = new Locale(languageCode);
+            LocaleContextHolder.setLocale(locale);
+        } catch (Exception e) {
+            return sendMessage(event, "invalid_language");  // You can customize this message if needed
         }
 
-        LocaleContextHolder.setLocale(locale);
         return sendMessage(event, "language_changed");
     }
 
