@@ -50,8 +50,6 @@ public class CommandHandler {
         })).block();
     }
 
-    // Command handling methods
-
     private Mono<Void> handleStartGameCommand(MessageCreateEvent event, String userId) {
         gameSessionService.startSession(userId);
         return sendMessage(event, "game_started");
@@ -87,12 +85,6 @@ public class CommandHandler {
 
     private Mono<Void> handleSetLangCommand(MessageCreateEvent event, String userId, String content) {
         String[] parts = content.split(" ");
-
-        // Check if the user has provided a language code
-        if (parts.length < 2) {
-            return sendMessage(event, "availableLanguages");
-        }
-
         String languageCode = parts[1];
         Locale locale;
 
@@ -100,7 +92,7 @@ public class CommandHandler {
             locale = new Locale(languageCode);
             LocaleContextHolder.setLocale(locale);
         } catch (Exception e) {
-            return sendMessage(event, "invalid_language");  // You can customize this message if needed
+            return sendMessage(event, "invalid_language");
         }
 
         return sendMessage(event, "language_changed");
