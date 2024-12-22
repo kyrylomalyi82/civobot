@@ -41,21 +41,18 @@
 Example Usage
 Start a game:
 
-!startgame
-Add players to the game:
+- !startgame
 
+-Add players to the game:
 !players @Player1 @Player2 @Player3
-Set the number of civilization picks:
+
+-Set the number of civilization picks:
 !picks 3
 
-Set the bot language to Spanish:
+-Set the bot language to Spanish:
 !setlang es
 Future Features
 
-Expanded Game Mechanics: Additional commands for handling in-game actions and results.
-Advanced Player Statistics: Track player performance and historical game data.
-Enhanced World Generation Options: More customizable world generation settings.
-Contact
 
 Feel free to reach out if you have questions or want to contribute to the project:
 
