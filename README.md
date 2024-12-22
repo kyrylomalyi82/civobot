@@ -1,64 +1,45 @@
 # CIVOBOT
 
-**CIVOBOT** is a powerful Discord bot designed to facilitate multiplayer games of **Civilization** by managing game sessions, assigning civilizations to players, and generating game environments dynamically. Built with Spring Boot and Discord4J, CIVOBOT leverages the flexibility of modern Java technologies to create an interactive and scalable bot for gamers.
+**CIVOBOT** is an advanced Discord bot created to enhance multiplayer **Civilization** games by organizing game sessions, allocating civilizations to players, and dynamically generating game environments. Developed using Spring Boot and Discord4J, CIVOBOT utilizes the adaptability of contemporary Java technologies to build an engaging and scalable bot for gamers.
 
-## Features
+## Characteristics
 
-- **Game Session Management**: Start and manage multiplayer Civilization game sessions.
-- **Civilization Assignment**: Randomly assigns civilizations to players with customizable pick limits.
-- **World Generation**: Provides different world generation options for the game.
-- **Multilingual Support**: Supports multiple languages including English, German, Russian, Spanish, Chinese, and Ukrainian, with dynamic language switching.
-- **Seamless Discord Integration**: Built using **Discord4J** for real-time interaction with users on Discord servers.
+- **Management of Game Sessions**: Initiate and oversee multiplayer Civilization game sessions.
 
-## Key Skills Demonstrated
+- **Civilization Task**: Allocates civilizations to players at random while allowing customizable selection limits.
 
-1. **Backend Development**: Expertise in Spring Boot to manage bot functionality, game sessions, and user interactions.
-2. **API Integration**: Integration with Discord’s API using Discord4J to handle events and commands in real time.
-3. **Randomization Algorithms**: Developed algorithms to randomly assign civilizations and world generations to players.
-4. **Localization & Internationalization**: Implemented multi-language support to cater to diverse global users.
-5. **Reactive Programming**: Used **Reactor** for efficient handling of asynchronous event-driven operations.
-6. **Game Logic**: Built game session handling logic for multiplayer games, ensuring smooth user experiences with dynamic game data.
-7. **Version Control**: Utilized Git and GitHub for version control and collaborative development.
+- **World Creation**: Offers various world creation choices for the game.
 
-## Technologies Used
+- **Multilingual Assistance**: Offers support for various languages such as English, German, Russian, Spanish, Chinese, and Ukrainian, featuring dynamic language switching.
 
-- **Java**: Primary programming language used for backend development.
-- **Spring Boot**: Framework for building the application and managing game sessions.
-- **Discord4J**: Library for integrating the bot with Discord.
-- **Reactor**: Library for reactive programming, handling asynchronous operations.
-- **Lombok**: Used to reduce boilerplate code for getters, setters, and other repetitive tasks.
-- **Maven**: Dependency management and project build system.
+- **Smooth Discord Integration**: Developed with **Discord4J** for instantaneous engagement with users on Discord servers.
 
+## Highlighted Skills Showcased
 
-## Command Reference
+1. **Backend Development**: Skilled in Spring Boot to oversee bot operations, gaming sessions, and user engagements.
 
-!startgame: Starts a new game session.
-!players @player1 @player2 ...: Add players to the game.
-!picks <number>: Set the number of civilization picks (1 to 5).
-!setlang <language>: Change the bot's language (e.g., en, de, es, ru, ua, cn).
-!help: Displays a list of available commands (could be added as a future feature).
+2. **API Integration**: Utilizing Discord’s API through Discord4J to manage events and commands in real-time.
 
-Example Usage
-Start a game:
+3. **Randomization Algorithms**: Created algorithms to assign civilizations and world generations to players at random.
 
-- !startgame
+4. **Localization & Internationalization**: Introduced support for multiple languages to accommodate various international users.
 
--Add players to the game:
-!players @Player1 @Player2 @Player3
+5. **Reactive Programming**: Utilized **Reactor** for effective management of asynchronous event-driven processes.
 
--Set the number of civilization picks:
-!picks 3
+6. **Game Logic**: Developed session management logic for multiplayer games, guaranteeing seamless user experiences with changing game data.
 
--Set the bot language to Spanish:
-!setlang es
-Future Features
+7. **Version Control**: Employed Git and GitHub for managing versions and collaborative coding.
 
+## Employed Technologies
 
-Feel free to reach out if you have questions or want to contribute to the project:
+- **Java**: Main programming language utilized for backend development.
 
-Email: [kyrylomalyi82@gmail.com]
-GitHub: [https://github.com/kyrylomalyi82]
+- **Spring Boot**: A framework utilized for developing applications and overseeing game sessions.
 
+- **Discord4J**: A library designed for connecting the bot to Discord.
 
+- **Reactor**: A library designed for reactive programming, managing asynchronous tasks.
 
+- **Lombok**: Utilized to minimize boilerplate code for getters, setters, and various repetitive activities.
 
+- **Gradle**: System for managing dependencies and building projects.
